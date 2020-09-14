@@ -15,7 +15,8 @@
 在 json 文件中添加如下内容：
 
 ```json
-"code-runner.executorMap": {  // run code 命令映射——进入当前 java 文件所在目录 然后编译并执行 java
+"code-runner.runInTerminal": true,  // 设置 run code 默认在终端下运行
+    "code-runner.executorMap": {  // run code 命令映射——进入当前 java 文件所在目录 然后编译并执行 java
         "java": "cd $dir && javac -encoding utf-8 $fileName && java $fileNameWithoutExt"
     },
 ```
