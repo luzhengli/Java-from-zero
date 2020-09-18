@@ -21,10 +21,30 @@ public class Instance {
         double d2 = -1.79e308;
         double d3 = 4.9e-324; // 科学计数法表示的4.9x10^-324 */
 
-        // 字符型
-        char c1 = 'a';
-        // char c2 = '中';
-        System.out.println(c1);
+        // // 字符型
+        // char c1 = 'a';
+        // // char c2 = '中';
+        // System.out.println(c1);
 
+        // int n = 100;
+        // int sum = 0;
+        // sum = (1+n)*n/2;
+        // System.out.println(sum);
+
+        // 强制类型转换
+        // int n1 = (int) 12.3; // 12
+        // int n2 = (int) 12.7; // 12
+        // int n3 = (int) -12.7; // -12
+        // int n4 = (int) (12.7 + 0.5); // 13
+        // int n5 = (int) 1.2e20; // 2147483647
+        // System.out.println(n1);
+        // System.out.println(n2);
+        // System.out.println(n3);
+        // System.out.println(n4);
+        // System.out.println(n5);
+        
+        double d = 1.6;
+        int n = (int)(d+0.5);  
+        System.out.println(n);
     }
 }
