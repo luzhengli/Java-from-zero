@@ -15,6 +15,12 @@ public class Instance {
     }
 }
 
+interface Father {
+    // 编译器会自动加上public statc final:
+    int MALE = 0;
+    public static final String name = "Father";
+}
+
 class Person {
     public String name; // 实例字段
     public static int id; // 静态字段
