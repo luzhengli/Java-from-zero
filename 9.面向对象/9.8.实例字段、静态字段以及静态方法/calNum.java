@@ -3,8 +3,8 @@ public class calNum {
         Person p1 = new Person();
         Person p2 = new Person();
         Person p3 = new Person();
-        Person p4 = new Person();
-
+        Person p4 = new Person(); 
+        
         int count = Person.getCount();
         System.out.println(count);
     }

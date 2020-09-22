@@ -1,8 +1,8 @@
 public class calTax {
     public static void main(String[] args) {
         // TODO: 用抽象类给一个有工资收入和稿费收入的小伙伴算税:
-        Income[] incomes = new Income[] { new BasicTax(3000), new SalaryIncome(7500), new RoyaltyIncome(12000) };
-        
+        Income[] incomes = new Income[] { new BasicIncome(3000), new SalaryIncome(7500), new RoyaltyIncome(12000) };
+
         System.out.println(totalTax(incomes));
     }
 
@@ -22,11 +22,15 @@ abstract class Income {
         this.income = income;
     }
 
+    // public void printName() { // 可以定义非抽象方法
+    //     this.getClass();
+    // }
+
     public abstract double getTax();
 }
 
-class BasicTax extends Income {
-    public BasicTax(double income) {
+class BasicIncome extends Income {
+    public BasicIncome(double income) {
         super(income);
     }
 
