@@ -67,7 +67,7 @@ A5：JVM 不依赖 `classpath` 加载核心库！保持默认即可（*这里其
 
 Q6：jar 包是什么？
 
-Q6：基本上就是一个 zip 包，但和 zip 包有一个区别。
+A6：基本上就是一个 zip 包，但和 zip 包有一个区别。
 
 
 
@@ -79,7 +79,7 @@ A7：它可以把 `package` 组织的目录层级，以及各个目录下的所�
 
 Q8：zip 包和 jar 包的区别？
 
-A9：
+A8：
 
 - jar 文件的内容中，包含了一个 META-INF/MANIFEST.MF 文件，该文件是在生成 jar 文件的时候自动创建的，作为 jar 里面的"详情单"，包含了该 jar 包的版本、创建人和类搜索路径 `classpath` 等信息。
 - 如果是可执行 jar 包，会包含 Main-Class 属性，表明 Main 方法入口，尤其是较为重要的 Class-Path 和 Main-Class。
