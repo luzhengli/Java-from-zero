@@ -39,7 +39,7 @@ Commons Logging 定义了6个日志级别：
     }
     ```
     
-3. 编译 Java 文件：在当前路径输入 `javac -cp commons-logging-1.2.jar Instance.java`，这里由于需要调用第三方包，因此需要在编译时加上 classpath 参数 `-cp`。
+3. 编译 Java 文件：在当前路径输入 `javac -cp commons-logging-1.2.jar Instance.java -encoding utf-8`，这里由于需要调用第三方包，因此需要在编译时加上 classpath 参数 `-cp`。此外，为了避免中文编码错误，需要设置 `-encoding` 参数为 utf-8。
 
 4. 运行程序：在当前路径输入 `java -cp ".;commons-logging-1.2.jar" Instance`。在这里，classpath 由 `.` 和 `commons-logging-1.2.jar` 两部分组成，中间用 `;` 分割（如果是类 Unix 平台，需要用 `:`），这告诉 JVM 要在当前目录 `.` 下寻找名为 `commons-logging-1.2` 的 jar 包。
 
@@ -57,5 +57,17 @@ PS F:\Note\Java\11.异常处理\11.4.使用日志\11.4.2.使用Commons-Logging> 
 信息: start...
 10月 14, 2020 11:33:42 上午 Instance main
 警告: end.
+```
+
+
+
+Commons Logging 的日志方法，例如 `info()` ，除了提供标准 `info(String)`外，还提供了有用的**重载方法 `info(String, Throwable)`**。这使得记录异常更加方便：
+
+```java
+try{
+
+} catch (Exception e) {
+	log.error("got exception!", e);
+}
 ```
 
