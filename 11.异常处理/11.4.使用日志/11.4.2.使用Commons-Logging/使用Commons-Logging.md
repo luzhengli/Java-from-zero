@@ -1,6 +1,10 @@
 # 什么是 Commons Logging？
 Commons Logging 是一个由 Apache 创建的第三方日志包。它的特点是可以通过修改配置文件挂接不同的日志系统，默认情况下使用的 Log4j（一个流行的日志系统），如果没有再使用 JDK Logging。
 
+
+
+**注**：Commons Logging 只是一种日志抽象门面，不是具体的日志框架。和它类似的概念还有 slf4j。目前流行的具体日志框架有 log4j 2 和 logback。 
+
 # 使用 Commons Logger
 
 Commons Logging 定义了6个日志级别：
