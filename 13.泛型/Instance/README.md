@@ -86,7 +86,7 @@ String last = (String) p.getLast();
 
 
 
-## Java 泛型的局限
+## Java 泛型的局限（坑）
 
 了解到泛型是由擦拭法实现的，那么可以知道 Java 泛型的局限：
 
@@ -134,7 +134,168 @@ String last = (String) p.getLast();
     }
     ```
 
-4. 不能实例化 `<T>`
+4. （*学习完反射回看*）不能实例化 `<T>`。例如，下面代码是无法编译成功的：
+
+    ```java
+    public class Pair<T> {
+        private T first;
+        private T last;
+        public Pair() {
+            // Compile error:
+            first = new T(); // 编译器擦拭后会变为 new Object()
+            last = new T();
+        }
+    }
+    ```
+
+    错误原因在于编译器会进行，擦拭。使得
+
+    ```java
+    first = new T();
+    last = new T();
+    ```
+
+    变为
+
+    ```java
+    first = new T();
+    last = new T();
+    ```
+
+    这将使用 `new Pair<String>()` 和 `new Pair<Integer>()` 会变为 `Object`  。
+
+    如果要实例化 `<T>` 类型，需要借助**参数 `Class <T>`**：
+
+    ```java
+    public class Pair<T> {
+        private T first;
+        private T last;
+        public Pair(Class<T> clazz) {
+            first = clazz.newInstance();
+            last = clazz.newInstance();
+        }
+    }
+    ```
+
+    进行实例化时，也必须传入 `Class <T>`，如：
+
+    ```java
+    Pair<String> pair = new Pair<>(String.class);
+    ```
+
+5. 使用不恰当的重写方法会产生冲突。例如在泛型类中定义了方法 `equals`：
+
+    ```java
+    public class Pair<T> {
+        public boolean equals(T t) {
+            return this == t;
+        }
+    }
+    ```
+
+    以上代码会报错，这是因为`equals(T t)`方法实际上会被擦拭成`equals(Object t)`，而这个方法是继承自`Object`的。**编译器不允许定义一个会被覆写的泛型方法**。
+
+    为了解决这个问题，只需要改变方法名，避免使用覆写方法名：
+
+    ```java
+    public class Pair<T> {
+        public boolean same(T t) {
+            return this == t;
+        }
+    }
+    ```
+
+
+
+# 泛型的继承
+
+一个类可以继承自一个泛型类。
+
+
+
+**例子**：父类的类型是`Pair<Integer>`，子类的类型是`IntPair`，可以这么继承：
+
+```java
+public class IntPair extends Pair<Integer> {
+}
+```
+
+使用时，由于子类没有泛型类型，所以正常使用就行：
+
+```java
+IntPair ip = new IntPair(1, 2);
+```
+
+
+
+对于一个泛型类（如 `Pair<T>`）的给定变量（如 `Pair<Integer> p`）来说，我们无法从 p 中获取 `Integer` 类型。 
+
+但是**在继承了泛型类型的情况下，子类可以获取父类的泛型类型**。
+
+
+
+>   获取父类的泛型类型代码比较复杂：
+>
+>   ```java
+>   import java.lang.reflect.ParameterizedType;
+>   import java.lang.reflect.Type;
+>   
+>   public class Main {
+>       public static void main(String[] args) {
+>           Class<IntPair> clazz = IntPair.class;
+>           Type t = clazz.getGenericSuperclass();
+>           if (t instanceof ParameterizedType) {
+>               ParameterizedType pt = (ParameterizedType) t;
+>               Type[] types = pt.getActualTypeArguments(); // 可能有多个泛型类型
+>               Type firstType = types[0]; // 取第一个泛型类型
+>               Class<?> typeClass = (Class<?>) firstType;
+>               System.out.println(typeClass); // Integer
+>           }
+>       }
+>   }
+>   
+>   class Pair<T> {
+>       private T first;
+>       private T last;
+>       public Pair(T first, T last) {
+>           this.first = first;
+>           this.last = last;
+>       }
+>       public T getFirst() {
+>           return first;
+>       }
+>       public T getLast() {
+>           return last;
+>       }
+>   }
+>   
+>   class IntPair extends Pair<Integer> {
+>       public IntPair(Integer first, Integer last) {
+>           super(first, last);
+>       }
+>   }
+>   ```
+>
+>   
+
+# Java 的类型系统
+
+Java的类型系统结构如下：
+
+```
+                      ┌────┐
+                      │Type│
+                      └────┘
+                         ▲
+                         │
+   ┌────────────┬────────┴─────────┬───────────────┐
+   │            │                  │               │
+┌─────┐┌─────────────────┐┌────────────────┐┌────────────┐
+│Class││ParameterizedType││GenericArrayType││WildcardType│
+└─────┘└─────────────────┘└────────────────┘└────────────┘
+```
+
+
 
 # 总结
 
@@ -143,8 +304,17 @@ String last = (String) p.getLast();
 - 可以在接口中定义泛型，实现此接口的类必须实现正确的泛型类型。
 - 可以省略编译器能自动推断出的类型（建议不要省略），例如：`List<String> list = new ArrayList<>();`
 - 不指定泛型类型时，编译器默认将其视为 `Object` 类型。
-- **泛型类型必须是引用类型**
 - 编写泛型
     - 可以根据一个类改写成泛型类，需要定义泛型类型`<T>`
     - 静态方法的泛型类型不能和类中其他方法和字段的泛型类型一样，除此之外，还需要在 `static` 后加上泛型类型
+- Java 的泛型是通过擦拭法实现的，具体来说是由编译器做了两件事：
+    - 将 `<T>` 擦拭为 `Object`
+    - 根据 `<T>` 的类型自动的实现安全的强制转型
+- 由于擦拭法的实现机制，Java 的泛型有不少局限（坑），主要包括：
+    - `<T>`不能是基本类型
+    - 不能取得泛型类的 `class`，不同泛型类型类的 `class` 都是一样的
+    - 无法判断带泛型的类型
+    - 不能实例化 `<T>` 类型，需要借助**参数 `Class <T>`**
+    - 编译器不允许定义一个会被覆写的泛型方法。例如在泛型类中定义了方法 `equals`会产生冲突，需要改名
+- 泛型可以继承。在继承了泛型类型的情况下，子类可以获取父类的泛型类型
 

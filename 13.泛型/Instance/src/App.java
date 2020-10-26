@@ -7,6 +7,7 @@ import static java.lang.System.out;
 import packg1.StringArrayList;
 import packg2.Person;
 import packg3.Pair;
+import packg4;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -58,10 +59,13 @@ public class App {
         out.println(c1 == Pair.class);
         out.println(c2 == Pair.class);
 
-        Pair<String, String> p = new Pair<String, String>("123", "456");
+        // 无法判断带泛型的类型
+        // Pair<String, String> p = new Pair<String, String>("123", "456");
         // Compile error:
-        if (p instanceof Pair<?, ?>) {
-            
-        }
+        // if (p instanceof Pair<String, String>) {  
+        // }
+        
+        // 
+        packg4.Pair<String> p = new packg4.Pair<>(String.class);
     }
 }
