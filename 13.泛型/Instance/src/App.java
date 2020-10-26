@@ -2,12 +2,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 import static java.lang.System.out;
 
 import packg1.StringArrayList;
 import packg2.Person;
 import packg3.Pair;
-import packg4;
+import packg5.PairHelper;
+import packg5.Pair2;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -49,23 +52,34 @@ public class App {
         // out.println(pair2.getLast());
 
         // 擦拭法
-        Pair<String, Integer> p1 = new Pair<String, Integer>("first", 20);
-        Pair<Float,String> p2 = new Pair<Float,String>(3.21f, "last");
-        Class c1 = p1.getClass();
-        Class c2 = p2.getClass();
-        out.println(c1);
-        out.println(c1);
-        out.println(c1 == c2);
-        out.println(c1 == Pair.class);
-        out.println(c2 == Pair.class);
+        // Pair<String, Integer> p1 = new Pair<String, Integer>("first", 20);
+        // Pair<Float, String> p2 = new Pair<Float, String>(3.21f, "last");
+        // Class c1 = p1.getClass();
+        // Class c2 = p2.getClass();
+        // out.println(c1);
+        // out.println(c1);
+        // out.println(c1 == c2);
+        // out.println(c1 == Pair.class);
+        // out.println(c2 == Pair.class);
 
         // 无法判断带泛型的类型
         // Pair<String, String> p = new Pair<String, String>("123", "456");
         // Compile error:
-        // if (p instanceof Pair<String, String>) {  
+        // if (p instanceof Pair<String, String>) {
         // }
+
+        // extends 通配符
+        // Pair2<Number> p2 = new Pair2<Number>(1, 2); // 合法
+        // Pair2<Integer> p2 = new Pair2<Integer>(1, 2); // 需要修改静态方法add的接口后才合法
+        int sum = PairHelper.add(p2);
+        out.println(sum);
+
         
-        // 
-        packg4.Pair<String> p = new packg4.Pair<>(String.class);
+    }
+
+    static int add(Pair2<Number> p) {
+        Number first = p.getFirst();
+        Number last = p.getLast();
+        return first.intValue() + last.intValue();
     }
 }
