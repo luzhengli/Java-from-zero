@@ -31,8 +31,8 @@ public class App {
         // }
 
         // 3. 递归打印
-        File f = new File("D:\\Anaconda\\etc");
-        listDir(f.getCanonicalFile(), "");
+        // File f = new File("D:\\Anaconda\\etc");
+        // listDir(f.getCanonicalFile(), "");
 
     }
 
