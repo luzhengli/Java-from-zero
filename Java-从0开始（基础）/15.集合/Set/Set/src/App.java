@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.SortedSet;
 
@@ -17,6 +18,7 @@ public class App {
         for (Message message : received) {
             sortedSet.add(message);
         }
+
         List<Message> list = List.of(sortedSet.toArray(new Message[sortedSet.size()]));
         return list;
     }

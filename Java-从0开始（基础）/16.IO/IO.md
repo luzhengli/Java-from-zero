@@ -273,6 +273,91 @@ static void readByteArrayInputStream() throws IOException {
 
 ## OutputStream
 
+OutputStream 是一个抽象类，它的基本方法是 `void write(int b)`，签名如下：
+
+```java
+public abstract void write(int b) throws IOException;
+```
+
+- 注：传入的 `int` 实际上只会写入一个字节，即 `int` 的低八位。
+
+
+
+此外，`OutputStream`有个`flush()`方法，能强制把缓冲区内容输出。
+
+通常情况，例如缓冲区写满或是关闭 `OutputStream` 时，`OutputStream` 会自动调用 `flush()` 方法。而在某些情况下需要手动调用该方法。例如我们希望在发送一条消息后，对方能够立即受到。这种情况下需要每次在输入发送内容后立即执行一次 `flush` 方法。
+
+
+
+OutputStream 的实现类有：FileOutputStream 、ByteArrayOutputStream。
+
+### FileOutputStream
+
+实例1：一次写入一个字符
+
+```javascript
+static void writeFileOutputStreamByByte() throws IOException {
+    try (OutputStream output = new FileOutputStream("out\\output1.txt")) {
+        output.write(72); // H
+        output.write(101); // e
+        output.write(108); // l
+        output.write(108); // l
+        output.write(111); // o
+    } // 会自动调用 output.close()
+}
+```
+
+
+
+---
+
+实例2：一次写入多个字符
+
+```java
+static void writeFileOutputStreamByByteArray() throws IOException{
+    try (OutputStream output = new FileOutputStream("out\\output2.txt")) {
+         output.write("World".getBytes("UTF-8"));  // 把字符串按“UTF-8”编码编码成字节数组
+    } 
+}
+```
+
+- `OutputStream .write()` 方法是一个重载方法，可以写入一个 `int` 的低八位，也可以写入一个 `byte[]`
+
+
+
+### ByteArrayOutputStream
+
+`ByteArrayOutputStream`可以在内存中模拟一个`OutputStream`：
+
+```java
+static void writeByteArrayOutputStream() throws IOException {
+    byte[] data;
+    try (ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+        output.write("Hello ".getBytes("UTF-8"));
+        output.write("World.".getBytes("UTF-8"));
+        data = output.toByteArray();
+    }
+    System.out.println(new String(data, "UTF-8"));
+}
+```
+
+
+
+---
+
+`try(resource) { ... }` 语句支持操作多个`AutoCloseable`资源，资源间用 `;`隔开。
+
+实例：同时打开两个文件（一个输入流、一个输出流），然后把输入流的数据写入到输出流。
+
+```java
+// 读取input.txt，写入output.txt:
+try (InputStream input = new FileInputStream("input.txt");
+     OutputStream output = new FileOutputStream("output.txt"))
+{
+    input.transferTo(output); // transferTo的作用是?
+}
+```
+
 
 
 # Reader / Writer
@@ -283,8 +368,21 @@ Reader 和 Writer 本质上是一个能自动编解码的 InputStream 和 Output
 
 
 
+
+
 # 小结
 
--   InputStream 是输入流，本质是一个抽象类。其具体实现类有 FileInputStream（文件输入流）、ByteArrayInputStream（内存中的字节数组输入流）。
--   InputStream 提供的 `int read()` 方法可以读取数据（最小单位是字节），它是一个重载方法，可以按字节一个个读，也可以通过缓存一次性读多个字节。
--   为了保证输入流正确关闭，因此需要在 `try(source){...}`语句中进行实例化和执行相应的操作语句。
+- InputStream 是输入流，本质是一个抽象类。其具体实现类有 FileInputStream（文件输入流）、ByteArrayInputStream（内存中的字节数组输入流）。
+
+- InputStream 提供的 `int read()` 方法可以读取数据（最小单位是字节），它是一个重载方法，可以按字节一个个读，也可以通过缓存一次性读多个字节。
+
+- `public long InputStream.transferTo(OutputStream out)` 可以实现讲输入流的数据全部写入到输出流中。通过该方法可以实现文件的复制。
+
+- OutputStream 是输出流，本质是一个抽象类。其具体实现类有 FileOutPutStream（文件输出流）、ByteArrayOutputStream（内存中的字节数组输出流）。
+
+    OutputStream 提供的 `void write()` 方法可以写入数据（最小单位是字节），它是一个重载方法，可以按字节一个个写，也可以通过缓存一次性写多个字节。
+
+- 为了保证输入/出流正确关闭，因此需要在 `try(source){...}`语句中进行实例化和执行相应的操作语句。
+
+- `try(source){...}`语句支持打开多个流，不同的资源间用 `;` 分割。
+
