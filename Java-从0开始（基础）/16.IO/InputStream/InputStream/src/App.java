@@ -49,7 +49,7 @@ public class App {
         byte[] bytes = { 72, 101, 108, 108, 111, 33 };
         StringBuilder sb = new StringBuilder(16);
         try (InputStream input = new ByteArrayInputStream(bytes)) {
-            int n;
+            int n;  
             while ((n = input.read()) != -1) {
                 sb.append((char) n);
             }
