@@ -117,7 +117,6 @@ File[] fList2 = f.listFiles(new FilenameFilter() {
 ```
 
 - `FilenameFilter` 提供了根据名称进行过滤的功能，具体来说需要重写 accept 方法。
-- 
 
 ---
 
@@ -156,7 +155,7 @@ File
 
 
 
-# InputStream / OutputStream
+# 基于字节的IO流：InputStream / OutputStream 抽象类
 
 IO流以`byte`（字节）为最小单位，因此也称为*字节流*。
 
@@ -360,7 +359,156 @@ try (InputStream input = new FileInputStream("input.txt");
 
 
 
-# Reader / Writer
+## FilterInputStream 和 FilterOutputStream 抽象装饰类
+
+FilterInputStream 和 FilterOutputStream 是两个装饰抽象类。其下的一些具体类可以装饰 InputStream 和 OutputStream，以增强它们的功能。
+
+### 使用 ZipInputStream 读取 zip
+
+继承关系如下：
+
+```cmd
+┌───────────────────┐
+│    InputStream    │
+└───────────────────┘
+          ▲
+          │
+┌───────────────────┐
+│ FilterInputStream │
+└───────────────────┘
+          ▲
+          │
+┌───────────────────┐
+│InflaterInputStream│
+└───────────────────┘
+          ▲
+          │
+┌───────────────────┐
+│  ZipInputStream   │
+└───────────────────┘
+          ▲
+          │
+┌───────────────────┐
+│  JarInputStream   │
+└───────────────────┘
+```
+
+-   ZipInputStream 可以实现 zip 包的读取
+-   JarInputStream 可以实现读取jar文件里面的`MANIFEST.MF`文件（本质来说，jar 包就是加了描述文件的 zip 包）
+
+
+
+**ZipInputStream 的基本用法**：
+
+1.  创建一个 ZipInputStream，为其传入 FileInputStream 作为数据源。然后循环调用 `ZipInputStream.getNextEntry()` 方法（该方法会返回`ZipEntry`对象），直至返回 `null`。
+2.   `ZipEntry` 可以是压缩文件或者目录（可以通过 `ZipEntry.isDirectory()`方法判断是否为目录）。如果是压缩文件，可以直接使用 `ZipEntry.read()` 方法读取，直至返回 `-1`。
+
+
+
+实例：
+
+```java
+try (ZipInputStream zip = new ZipInputStream(new FileInputStream("src\\files\\test1.zip"))) {
+    ZipEntry entry = null;
+    while ((entry = zip.getNextEntry()) != null) { // 遍历zip实体，直至为null
+        if (!entry.isDirectory()) { // 如果zip实体不是目录可以读取字节
+            int n;
+            while ((n = zip.read()) != -1) { // 读取zip输入流
+                System.out.println((char) n);
+            }
+        }
+    }
+}
+```
+
+输出：
+
+```
+H
+e
+l
+l
+o
+```
+
+
+
+### 使用 ZipOutputStream 写入 zip
+
+**ZipOutputStream 的基本用法**：
+
+1.  遍历每一个待写入的 File 对象 file
+    1.  使用 `ZipOutputStream.putNextEntry()` 方法并传入 `ZipEntry` 对象
+    2.  使用 `ZipOutputStream.write()` 方法写入数据，对于 File 的数据源可以是 `getFileDataAsBytes(file)`
+    3.  调用 `ZipOutputStream.closeEntry()` 方法结束 zip 打包。
+
+
+
+实例：
+
+```java
+public static void main(String[] args) throws Exception {
+    try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream("src\\files\\testAll.zip"))) {
+        File[] files = { new File("src\\files\\test1.txt"), new File("src\\files\\test2.txt"),
+            new File("src\\files\\test3.txt"), };
+        for (File file : files) {
+            zip.putNextEntry(new ZipEntry(file.getName())); // 创建 ZipEntry
+            zip.write(getFileDataAsBytes(file)); // 写入数据调用子实现的方法：getFileDataAsBytes
+            zip.closeEntry(); // 关闭 ZipEntry
+        }
+    }
+}
+
+static byte[] getFileDataAsBytes(File file) throws IOException {
+    // 根据File获取到其bytes
+    byte[] bytes = new byte[100];
+    try (InputStream input = new FileInputStream(file)) {
+        int n;
+        while ((n = input.read(bytes)) != -1) ;
+    }
+    return bytes;
+}
+```
+
+
+
+### 使用 PrintStream 输出数据
+
+PrintStream 继承了 FilterOutputStream，它为 OutputStream 接口提供了一组写入方法：
+
+-   写入`int`：`print(int)`
+-   写入`boolean`：`print(boolean)`
+-   写入`String`：`print(String)`
+-   写入`Object`：`print(Object)`，实际上相当于`print(object.toString())`
+
+以及对应的一组`println()`方法。
+
+
+
+Java 内置提供了几个 PrintStream：
+
+-   System.out：标准输出
+-   System.err：标准错误输出
+
+
+
+PrintStream 相较于 OutputStream 的好处在于：
+
+1.  提供了一组打印方法
+2.  不会抛出 `IOException`，使得编写代码时无需捕获它
+
+
+
+**有话想说**：没想到最常用的输入输出函数背后其实是一个装饰器 `PrintStream`！有意思。此外，知道它的本质之后，以后可以简写输出方法了，例如
+
+```java
+PrintStream out = System.out;
+out.println("123");
+```
+
+
+
+# 基于字符的IO流：Reader / Writer 抽象类
 
 字符流传输的最小数据单位是`char`，按照`char`来读写。
 
@@ -368,21 +516,158 @@ Reader 和 Writer 本质上是一个能自动编解码的 InputStream 和 Output
 
 
 
+## Reader
+
+`Reader`是Java的IO库提供的另一个输入流接口。和`InputStream`的区别是，**`InputStream`是一个字节流，即以`byte`为单位读取，而`Reader`是一个字符流，即以`char`为单位读取**：
+
+| InputStream                         | Reader                                |
+| :---------------------------------- | :------------------------------------ |
+| 字节流，以`byte`为单位              | 字符流，以`char`为单位                |
+| 读取字节（-1，0~255）：`int read()` | 读取字符（-1，0~65535）：`int read()` |
+| 读到字节数组：`int read(byte[] b)`  | 读到字符数组：`int read(char[] c)`    |
+
+
+
+`java.io.Reader`是所有字符输入流的超类，它最主要的方法是：
+
+```java
+public int read() throws IOException;
+```
+
+这个方法读取字符流的下一个字符，并返回字符表示的`int`，范围是`0`~`65535`。如果已读到末尾，返回`-1`。
+
+
+
+### Filereader
+
+FileReader 是 Reader 的子类。使用 `int read()` 方法逐字符读取 FileReader 的代码：
+
+```java
+try (Reader reader = new FileReader("src\\files\\test1.txt", StandardCharsets.UTF_8)) {  
+    int n;
+    while ((n = reader.read()) != -1) {
+        System.out.printf("%c", n);
+    }
+}
+```
+
+-   按字符读取必须在打开字符输入流时指定编码，例如这里的 `StandardCharsets.UTF_8`
+
+
+
+输出：
+
+```cmd
+Hello，这是一个测试文件！
+```
+
+---
+
+还可以使用 `int read(char[] cbuf)` 方法一次读取多个字符到 cbuf，代码如下：
+
+```java
+try (Reader reader = new FileReader("src\\files\\test1.txt", StandardCharsets.UTF_8)) {
+    char[] buffer = new char[3]; 
+    int n;
+    while ((n = reader.read(buffer)) != -1) {
+        System.out.println(buffer);
+    }
+}
+```
+
+
+
+输出：
+
+```cmd
+Hel
+lo，
+这是一
+个测试
+文件！
+```
+
+
+
+### CharArrayReader
+
+`CharArrayReader`可以在内存中模拟一个`Reader`，它的作用实际上是把一个`char[]`数组变成一个`Reader`，这和`ByteArrayInputStream`非常类似：
+
+```java
+try (Reader reader = new CharArrayReader("Hello".toCharArray())) {
+}
+```
+
+
+
+### StringReader
+
+**`StringReader`可以直接把`String`作为数据源**，它和`CharArrayReader`几乎一样：
+
+```java
+try (Reader reader = new StringReader("Hello")) {
+}
+```
+
+
+
+## Writer
+
+省略不表。可见：https://www.liaoxuefeng.com/wiki/1252599548343744/1298366912790561
+
+
+
+## 使用 InputStreamReader 将任何 InputStream 转换为 Reader
+
+-   除了特殊的`CharArrayReader`和`StringReader`，普通的`Reader`实际上是基于`InputStream`构造的
+-   `Reader` 要从`InputStream`中读入字节流（`byte`），再将编码设置为`char`就可以实现字符流
+-   从源码来看，FileReader 持有一个 FileReader
+-   因此，**`Reader` 本质是一个基于`InputStream`的`byte`到`char`的转换器**
+
+
+
+如果现在有一个 `InputStream`，可以通过设置编码将其转为 `Reader`。实现转换的转换器是 `InputStreamReader`。实现代码如下：
+
+```java
+try (Reader reader = new java.io.InputStreamReader(new FileInputStream("src\\files\\test1.txt"),
+                StandardCharsets.UTF_8);) {
+    char[] buffer = new char[100];
+    int n;
+    while ((n = reader.read(buffer)) != -1) {
+        System.out.println(buffer);
+    }
+}
+```
+
+
+
+# 读取 classpath 资源
+
+暂时不表
+
+
+
+# 序列化和反序列化
+
+暂时不表
+
+
+
 
 
 # 小结
 
-- InputStream 是输入流，本质是一个抽象类。其具体实现类有 FileInputStream（文件输入流）、ByteArrayInputStream（内存中的字节数组输入流）。
-
-- InputStream 提供的 `int read()` 方法可以读取数据（最小单位是字节），它是一个重载方法，可以按字节一个个读，也可以通过缓存一次性读多个字节。
-
-- `public long InputStream.transferTo(OutputStream out)` 可以实现讲输入流的数据全部写入到输出流中。通过该方法可以实现文件的复制。
-
-- OutputStream 是输出流，本质是一个抽象类。其具体实现类有 FileOutPutStream（文件输出流）、ByteArrayOutputStream（内存中的字节数组输出流）。
-
-    OutputStream 提供的 `void write()` 方法可以写入数据（最小单位是字节），它是一个重载方法，可以按字节一个个写，也可以通过缓存一次性写多个字节。
-
-- 为了保证输入/出流正确关闭，因此需要在 `try(source){...}`语句中进行实例化和执行相应的操作语句。
-
-- `try(source){...}`语句支持打开多个流，不同的资源间用 `;` 分割。
+- InputStream 和 OutputStream
+    - InputStream 和 OutputStream 是**基于字节**的输入输出流，本质是一个抽象类。其具体实现类有 FileInputStream（文件输入流）、ByteArrayInputStream（内存中的字节数组输入流）；FileOutPutStream（文件输出流）、ByteArrayOutputStream（内存中的字节数组输出流）。
+    - InputStream 提供的 `int read()` 方法可以读取数据（最小单位是字节），它是一个重载方法，可以按字节一个个读，也可以通过缓存一次性读多个字节。
+    - OutputStream 提供的 `void write()` 方法可以写入数据（最小单位是字节），它是一个重载方法，可以按字节一个个写，也可以通过缓存一次性写多个字节。
+    - `public long InputStream.transferTo(OutputStream out)` 可以实现讲输入流的数据全部写入到输出流中。通过该方法可以实现文件的复制。
+- try(source) 语句
+    - 为了保证输入/出流正确关闭，因此需要在 `try(source){...}`语句中进行实例化和执行相应的操作语句。
+    - `try(source){...}`语句支持打开多个流，不同的资源间用 `;` 分割。
+- FilterInputStream 和 FilterOutputStream 
+    - InputStream 和 OutputStream 各自提供了 FilterInputStream 和 FilterOutputStream 两个装饰抽象类，这两个抽象类下面有各自具有 ZipInputStream、DataInputStream（或ZipOutputStream、DataOutputStream） 等具体装饰器类。可以使用装饰器增强 InputSteam 和 OutputStream 的功能。
+    - FileInputStream 和 FileOutputStream 分别借助 ZipInputStream 和 ZipOutputStream 的装饰可以实现 zip 的读写。
+- Reader 和 Writer 是**基于字符**的读写流，它们提供和 InputStream&OutputSteam 类似的读写方法。读写时注意需要指定字符编码。
+- 使用 InputStreamReader，可以把一个 InputStream 转换成一个 Reader。
 
