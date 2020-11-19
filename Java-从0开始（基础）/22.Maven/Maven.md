@@ -1,3 +1,9 @@
+# Maven 是什么？
+
+>   **Apache Maven**，是一个[软件](https://www.wikiwand.com/zh-hans/软件)（特别是[Java](https://www.wikiwand.com/zh-hans/Java_(编程语言))软件）**[项目管理](https://www.wikiwand.com/zh-hans/项目管理)及[自动构建](https://www.wikiwand.com/zh-hans/自动构建)工具**，由[Apache软件基金会](https://www.wikiwand.com/zh-hans/Apache软件基金会)所提供。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
+>
+>   Maven也可被用于构建和管理各种项目，例如[C#](https://www.wikiwand.com/zh-hans/C♯)，[Ruby](https://www.wikiwand.com/zh-hans/Ruby)，[Scala](https://www.wikiwand.com/zh-hans/Scala)和其他语言编写的项目。Maven曾是[Jakarta项目](https://www.wikiwand.com/zh-hans/Jakarta项目)的子项目，现为由[Apache软件基金会](https://www.wikiwand.com/zh-hans/Apache软件基金会)主持的独立Apache项目。
+
 # Maven项目结构
 
 Maven 生成的一个普通的项目结构如下
@@ -149,7 +155,7 @@ Q：如何查找到要引用的第三方组件的`groupId`、`artifactId`和`ver
 
 A：通过[search.maven.org](https://search.maven.org/)搜索关键字，找到对应的组件后，直接复制：
 
-![copy-maven](https://gitee.com/llillz/images/raw/master/l)
+![image-20201119200242069](https://gitee.com/llillz/images/raw/master/image-20201119200242069.png)
 
 
 
