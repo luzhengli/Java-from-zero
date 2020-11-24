@@ -58,7 +58,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -101,7 +101,7 @@
       <updated>1605955169978</updated>
       <workItem from="1605955171147" duration="2898000" />
       <workItem from="1605958089848" duration="138000" />
-      <workItem from="1605958243000" duration="4839000" />
+      <workItem from="1605958243000" duration="7316000" />
     </task>
     <servers />
   </component>
@@ -145,22 +145,22 @@
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state width="514" height="514" key="DebuggerActiveHint/63.0.1857.1080@63.0.1857.1080" timestamp="1605958638287" />
-    <state width="1814" height="470" key="GridCell.Tab.0.bottom" timestamp="1605962856357">
+    <state width="1814" height="470" key="GridCell.Tab.0.bottom" timestamp="1606224779189">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="470" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605962856357" />
-    <state width="1814" height="470" key="GridCell.Tab.0.center" timestamp="1605962856356">
+    <state width="1814" height="470" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1606224779189" />
+    <state width="1814" height="470" key="GridCell.Tab.0.center" timestamp="1606224779189">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="470" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605962856356" />
-    <state width="1814" height="470" key="GridCell.Tab.0.left" timestamp="1605962856356">
+    <state width="1814" height="470" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1606224779189" />
+    <state width="1814" height="470" key="GridCell.Tab.0.left" timestamp="1606224779189">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="470" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605962856356" />
-    <state width="1814" height="470" key="GridCell.Tab.0.right" timestamp="1605962856356">
+    <state width="1814" height="470" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1606224779189" />
+    <state width="1814" height="470" key="GridCell.Tab.0.right" timestamp="1606224779189">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="470" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605962856356" />
+    <state width="1814" height="470" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1606224779189" />
     <state width="1814" height="364" key="GridCell.Tab.1.bottom" timestamp="1605960293921">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
@@ -181,18 +181,18 @@
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="521" y="195" key="Maven.ArtifactSearchDialog/63.0.1857.1080@63.0.1857.1080" timestamp="1605955365965" />
-    <state x="492" y="184" key="SettingsEditor" timestamp="1605958218520">
+    <state x="492" y="184" key="SettingsEditor" timestamp="1606223133062">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state x="492" y="184" key="SettingsEditor/63.0.1857.1080@63.0.1857.1080" timestamp="1605958218520" />
+    <state x="492" y="184" key="SettingsEditor/63.0.1857.1080@63.0.1857.1080" timestamp="1606223133062" />
     <state x="534" y="276" width="915" height="641" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1605957513796">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="534" y="276" width="915" height="641" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/63.0.1857.1080@63.0.1857.1080" timestamp="1605957513796" />
-    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1605960216190">
+    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1606224885521">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup/63.0.1857.1080@63.0.1857.1080" timestamp="1605960216190" />
+    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup/63.0.1857.1080@63.0.1857.1080" timestamp="1606224885521" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

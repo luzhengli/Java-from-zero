@@ -84,10 +84,21 @@ JDBC
 2.  JDBC 连接
 
     1.  添加 Maven 依赖：JDBC 只是接口，真正使用时需要下载指定对应数据库的 JDBC 驱动，即封装了 Java 实现类的 jar 包。
-        1.  注：添加 Maven 依赖时需要指定正确的 version 和 scope（scope 选择 runtime，因为只需要运行期使用）
-    2.  打开 **Connection 连接**（Connection代表一个JDBC连接，它相当于Java程序到数据库的连接（通常是TCP连接）。打开一个Connection时，需要准备URL、用户名和口令，才能成功连接到数据库）
+
+        1.  以添加 MySQL 的驱动为例：需要下载 `mysql-connector-java` 依赖包；添加 Maven 依赖时需要指定正确的 version 和 scope（scope 选择 runtime，因为只需要运行期使用），如下所示
+
+            ```xml
+            <dependency>
+            	<groupId>mysql</groupId>
+            	<artifactId>mysql-connector-java</artifactId>
+            	<version>8.0.22</version>
+            </dependency>
+            ```
+
+    2.  打开 **Connection 连接**（Connection代表一个JDBC连接，它相当于Java程序到数据库的连接（通常是TCP连接）。**打开一个Connection时，需要准备URL、用户名和口令**，才能成功连接到数据库）
+
         1.  URL 的格式类似：`jdbc:mysql://<hostname>:<port>/<db>?key1=value1&key2=value2`。如果数据库运行在本机`localhost`，端口使用标准的`3306`，数据库名称是`learnjdbc`，则 URL 是 `jdbc:mysql://localhost:3306/learnjdbc?useSSL=false&characterEncoding=utf8`
-            1.  注：这里的两个参数 `useSSL` 和 `characterEncoding` 设置了不使用 SSL 加密以及使用 UTF-8作为编码
+            1.  注：这里的两个参数 `useSSL` 和 `characterEncoding` 设置了不使用 SSL 加密以及使用 UTF-8 作为编码
 
     
 
@@ -218,7 +229,7 @@ A：
 ```java
 try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
     try (PreparedStatement ps = conn.prepareStatement("SELECT id, grade, name, gender FROM students WHERE gender=? AND grade=?")) { // 注意这里的占位符 ?
-        ps.setObject(1, 1); // 注意：索引从1开始
+        ps.setObject(1, 1); // 第一个参数表示索引，注意，索引从1开始
         ps.setObject(2, 3);
         try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -247,13 +258,99 @@ id = 10, grade = 3, name = 小王, gender = 1
 
 ## 插入（Create）
 
+## 常规的插入
+
+和查询相比，插入的代码只需将`executeQuery()`改为`executeUpdate()`即可。
+
+
+
+实例：新插入一条信息
+
+```java
+try (PreparedStatement ps = conn.prepareStatement("INSERT INTO students (id,grade,name,gender,score) VALUES (?,?,?,?,?)")) {
+    ps.setObject(1, 15);
+    ps.setObject(2, 1);
+    ps.setObject(3, "老王");
+    ps.setObject(4, 1);
+    ps.setObject(5, 100);
+    int n = ps.executeUpdate(); // 修改的部分，该方法返回插入的字段条数
+    System.out.println("新插入" + n + "条数据");
+}
+```
+
+查看结果：
+
+![image-20201124211423325](https://gitee.com/llillz/images/raw/master/image-20201124211423325.png)
+
+
+
+## 设置了自增主键时的插入
+
+Q：如何获取插入后的自增主键的值？
+
+A：
+
+1.  警惕错误做法：要获取自增主键，不能先插入，再查询。这时因为这两条 SQL 语句之间可能有别的 SQL 语句修改了表。
+2.  正确做法：
+    1.  在创建`PreparedStatement`的时候，指定一个`RETURN_GENERATED_KEYS`标志位（就是一个`prepareStatement()`方法的一个参数），表示JDBC驱动必须返回插入的自增主键
+    2.  在执行完SQL语句后，使用 `PreparedStatement ` 对象的 `getGeneratedKeys()` 方法获取一个`ResultSet`对象，这个对象包含了数据库自动生成的主键的值，读取该对象的每一行来获取自增主键的值。如果一次插入多条记录，那么这个`ResultSet`对象就会有多行返回值。如果插入时有多列自增，那么`ResultSet`对象的每一行都会对应多个自增值（自增列不一定必须是主键）。
+
+
+
+实例：获取自增主键的插入
+
+```java
+try (PreparedStatement ps = conn.prepareStatement(
+    "INSERT INTO students (grade, name, gender) VALUES (?,?,?)",
+    Statement.RETURN_GENERATED_KEYS)) { // 设置 Statement.RETURN_GENERATED_KEYS 参数
+    ps.setObject(1, 1); // grade
+    ps.setObject(2, "Bob"); // name
+    ps.setObject(3, "M"); // gender
+    int n = ps.executeUpdate(); // 1
+    try (ResultSet rs = ps.getGeneratedKeys()) { // 获取自增主键
+        if (rs.next()) {
+            long id = rs.getLong(1); // 注意：索引从1开始
+        }
+    }
+}
+```
+
 
 
 ## 更新（Update）
 
+更新和插入在 JDBC 代码层面没有区别，都使用 `executeUpdate()` 方法。区别只在于 SQL 语句。
+
+
+
+实例：
+
+```java
+try (PreparedStatement ps = conn.prepareStatement("UPDATE students SET name=? WHERE id=?")) {
+    ps.setObject(1, "Bob"); // 注意：索引从1开始
+    ps.setObject(2, 999);
+    int n = ps.executeUpdate(); // 返回更新的行数
+}
+```
+
 
 
 ## 删除（Delete）
+
+删除和插入在 JDBC 代码层面没有区别，都使用 `executeUpdate()` 方法。区别只在于 SQL 语句。
+
+
+
+实例：
+
+```java
+try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
+    try (PreparedStatement ps = conn.prepareStatement("DELETE FROM students WHERE id=?")) {
+        ps.setObject(1, 999); // 注意：索引从1开始
+        int n = ps.executeUpdate(); // 删除的行数
+    }
+}
+```
 
 
 
@@ -277,3 +374,6 @@ id = 10, grade = 3, name = 小王, gender = 1
 
 
 
+# 小结
+
+-   JDBC 全称是 Java DataBase Connectivity，它是指 Java 应用程序访问数据库的一套标准接口。如果 Java 应用希望访问到数据库，需要 JDBC + 对应的数据库驱动（它是封装了接口实现类的 jar 包）。
