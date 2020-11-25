@@ -22,7 +22,7 @@ public interface Comparable<T> {
 **实例**：定义一个 Student 类，并按照 score 进行同类的比较
 
 ```java
-public class Student implements Comparable<NewStudent> {
+public class Student implements Comparable<Student> {
     public String name;
     public int score;
 
@@ -52,7 +52,7 @@ Comparator 接口的定义较为复杂，但其核心方法只有两个：
 @FunctionalInterface
 public interface Comparator<T> {
 	int compare(T o1, T o2);
-    boolean equals(Object obj);
+	boolean equals(Object obj);
 }
 ```
 
