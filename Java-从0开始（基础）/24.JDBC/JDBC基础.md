@@ -374,6 +374,165 @@ try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PAS
 
 
 
+# JDBC事务（学习完SQL后回看）
+
+Q：数据库事务的概念？
+
+A：数据库事务（Transaction）是由若干个SQL语句构成的一个操作序列。数据库系统保证在一个事务中的所有SQL要么全部执行成功，要么全部不执行，即**数据库事务具有 ACID 特性**：
+
+-   Atomicity：原子性
+-   Consistency：一致性
+-   Isolation：隔离性
+-   Durability：持久性
+
+
+
+---
+
+Q：事务的隔离级别是什么？
+
+A：SQL 标准定义了4种隔离级别，分别对应可能出现的数据不一致的情况：
+
+| Isolation Level  | 脏读（Dirty Read） | 不可重复读（Non Repeatable Read） | 幻读（Phantom Read） |
+| :--------------- | :----------------- | :-------------------------------- | :------------------- |
+| Read Uncommitted | Yes                | Yes                               | Yes                  |
+| Read Committed   | -                  | Yes                               | Yes                  |
+| Repeatable Read  | -                  | -                                 | Yes                  |
+| Serializable     | -                  | -                                 | -                    |
+
+
+
+---
+
+**JDBC 事务的代码范式**：
+
+```java
+Connection conn = openConnection();
+try {
+    // 关闭自动提交（这步是必须的，否则每一条SQL语句会作为一个事务自动执行）:
+    conn.setAutoCommit(false);
+    // 执行多条SQL语句:
+    insert(); update(); delete();
+    // 提交事务:
+    conn.commit();
+} catch (SQLException e) {
+    // 回滚事务:
+    conn.rollback();
+} finally {
+    conn.setAutoCommit(true); 
+    conn.close(); // 关闭资源
+}
+```
+
+-   **默认情况下，获取到`Connection`连接后，总是处于“自动提交”模式**。
+-   conn.setAutoCommit(false)：表示关闭自动提交，否则每一条SQL语句会作为一个事务自动执行。
+-   conn.commit()：在若干行SQL语句后使用改行代码表示提交一个事务。
+-   conn.rollback()：如果事务提交失败，需要捕获异常，然后使用改行代码回滚事务。
+
+
+
+可以使用以下代码设定事务的隔离级别：
+
+```java
+// 设定隔离级别为READ COMMITTED:
+conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+```
+
+
+
+# JDBC批量操作（JDBC Batch）
+
+Q：什么是数据库的 batch 操作？
+
+A：SQL 数据库对 SQL 语句相同，但只有参数不同的若干语句可以作为 batch 执行，即批量执行，这种操作有特别优化，速度远远快于循环执行每个 SQL。 
+
+---
+
+JDBC Batch 代码范式：
+
+```java
+try (PreparedStatement ps = conn.prepareStatement("INSERT INTO students (name, gender, grade, score) VALUES (?, ?, ?, ?)")) {
+    // 对同一个PreparedStatement反复设置参数并调用addBatch():
+    for (Student s : students) {
+        ps.setString(1, s.name);
+        ps.setBoolean(2, s.gender);
+        ps.setInt(3, s.grade);
+        ps.setInt(4, s.score);
+        ps.addBatch(); // 添加到batch
+    }
+    // 执行batch:
+    int[] ns = ps.executeBatch();
+    for (int n : ns) {
+        System.out.println(n + " inserted."); // batch中每个SQL执行的结果数量
+    }
+}
+```
+
+-   JDBC 批量操作需要对同一个 `PreparedStatement`反复设置参数并调用`addBatch()`。
+-   执行批量操作不是`executeUpdate()`，而是`executeBatch()`，返回的结果是多个`int`值，因此返回类型是`int[]`。
+
+
+
+# JDBC 连接池
+
+Q：什么是 JDBC 连接池？
+
+A：JDBC 的连接创建类似线程创建，都是十分耗费资源的操作。类似线程池，也出现了数据库连接池这种通过复用 JDBC 连接以节省开销的方式。
+
+和线程池不同，Java 仅提供了一个**标准接口 `javax.sql.DataSource`**，具体实现需要添加依赖包。**常用的常用的 JDBC 连接池实现有：**
+
+-   HikariCP
+-   C3P0
+-   BoneCP
+-   Druid
+
+
+
+---
+
+Q：如何使用 JDBC 连接池？
+
+A：目前使用最广泛的是HikariCP。以其为例，介绍 **JDBC 连接池的使用步骤**：
+
+1.  添加 HikariCP 依赖
+
+    ```xml
+    <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>3.4.5</version>
+    </dependency>
+    ```
+
+2.  创建 DataSource 实例（创建连接池）
+
+    ```java
+    HikariConfig config = new HikariConfig();
+    config.setJdbcUrl(JDBC_URL);
+    config.setUsername(JDBC_USER);
+    config.setPassword(JDBC_PASSWORD);
+    config.addDataSourceProperty("connectionTimeout", "1000"); // 连接超时：1s
+    config.addDataSourceProperty("idleTimeout", "60000"); // 空闲超时：60s
+    config.addDataSourceProperty("maximumPoolSize", "10"); // 最大连接数：10
+    DataSource sd = new HikariDataSource(config); // 创建连接池并传入一些配置参数
+    ```
+
+    -   创建 DataSource 也是一个非常昂贵的操作，**通常 DataSource 实例总是作为一个全局变量存储，并贯穿整个应用程序的生命周期**
+
+3.  获取 Connection（从连接池获取一个连接）
+
+    ```java
+    try (Connection conn = ds.getConnection()) { // 在此获取连接
+        ...
+    } // 在此“关闭”连接
+    ```
+
+    -   连接池创建后内部没有连接，因此需要调用 `ds.getConnection()` 选择一个空闲的连接，并标记为**“正在使用”**然后返回。
+    -   try source 会自动调用 `ds.close()` ，它不会真的关闭一个连接，而是将其再次标记为**“空闲”**，从而等待下次被调用。
+    -   连接池提供了许多可以配置的参数。例如，维护的最小、最大活动连接数，指定一个连接在空闲一段时间后自动关闭等，需要根据应用程序的负载合理地配置这些参数。
+
+4.  使用某个具体连接（conn）的方法和之前章节介绍的一样
+
 # 小结
 
--   JDBC 全称是 Java DataBase Connectivity，它是指 Java 应用程序访问数据库的一套标准接口。如果 Java 应用希望访问到数据库，需要 JDBC + 对应的数据库驱动（它是封装了接口实现类的 jar 包）。
+-   JDBC 全称是 Java DataBase Connectivity，它是指 Java 应用程序访问数据库的一套标准接口。如果 Java 应用希望访问到数据库，需要 JDBC + 对应的数据库驱动（后者是封装了接口实现类的 jar 包）。

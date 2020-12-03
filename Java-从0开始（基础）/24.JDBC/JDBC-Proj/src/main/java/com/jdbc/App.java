@@ -1,5 +1,9 @@
 package com.jdbc;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import javax.sql.DataSource;
 import java.sql.*;
 
 /**
@@ -29,47 +33,60 @@ public class App {
 //        }
 
 
-        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
-            // 使用 preparedStatement 查询
-            try (PreparedStatement ps = conn.prepareStatement("SELECT id, grade, name, gender FROM students WHERE gender=? AND grade=?")) { // 注意这里的占位符 ?
-                ps.setObject(1, 1); // 注意：索引从1开始
-                ps.setObject(2, 3);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        long id = rs.getLong("id");
-                        long grade = rs.getLong("grade");
-                        String name = rs.getString("name");
-                        int gender = rs.getInt("gender");
+//        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
+//            // 使用 preparedStatement 查询
+//            try (PreparedStatement ps = conn.prepareStatement("SELECT id, grade, name, gender FROM students WHERE gender=? AND grade=?")) { // 注意这里的占位符 ?
+//                ps.setObject(1, 1); // 注意：索引从1开始
+//                ps.setObject(2, 3);
+//                try (ResultSet rs = ps.executeQuery()) {
+//                    while (rs.next()) {
+//                        long id = rs.getLong("id");
+//                        long grade = rs.getLong("grade");
+//                        String name = rs.getString("name");
+//                        int gender = rs.getInt("gender");
+//
+//                        System.out.printf("id = %d, grade = %d, name = %s, gender = %d\n", id, grade, name, gender);
+//                    }
+//                }
+//            }
 
-                        System.out.printf("id = %d, grade = %d, name = %s, gender = %d\n", id, grade, name, gender);
-                    }
-                }
-            }
-
-            // 插入
-            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO students (id,grade,name,gender,score) VALUES (?,?,?,?,?)")) {
-                ps.setObject(1, 15);
-                ps.setObject(2, 1);
-                ps.setObject(3, "老王");
-                ps.setObject(4, 1);
-                ps.setObject(5, 100);
-                int n = ps.executeUpdate(); // 返回插入的样本条数
-                System.out.println("新插入" + n + "条数据");
+        // 插入
+//            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO students (id,grade,name,gender,score) VALUES (?,?,?,?,?)")) {
+//                ps.setObject(1, 15);
+//                ps.setObject(2, 1);
+//                ps.setObject(3, "老王");
+//                ps.setObject(4, 1);
+//                ps.setObject(5, 100);
+//                int n = ps.executeUpdate(); // 返回插入的样本条数
+//                System.out.println("新插入" + n + "条数据");
 
 
-            // 更新
-            try (PreparedStatement ps = conn.prepareStatement("UPDATE students SET name=? WHERE id=?")) {
-                ps.setObject(1, "小王");
-                ps.setObject(2, "15");
-                int n = ps.executeUpdate(); // 返回更新的条数
-            }
+        // 更新
+//            try (PreparedStatement ps = conn.prepareStatement("UPDATE students SET name=? WHERE id=?")) {
+//                ps.setObject(1, "小王");
+//                ps.setObject(2, "15");
+//                int n = ps.executeUpdate(); // 返回更新的条数
+//            }
 
-            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM students WHERE id=?")) {
-                ps.setObject(1, 15);
-                int n = ps.executeUpdate(); // 返回删除的条数
-                System.out.println("新删除" + n + "条");
-            }
-        }
+//            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM students WHERE id=?")) {
+//                ps.setObject(1, 15);
+//                int n = ps.executeUpdate(); // 返回删除的条数
+//                System.out.println("新删除" + n + "条");
+//            }
+//        }
+
+
+        // JDBC 连接池
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(JDBC_URL);
+        config.setUsername(JDBC_USER);
+        config.setPassword(JDBC_PASSWORD);
+        config.addDataSourceProperty("connectionTimeout", "1000"); // 连接超时：1s
+        config.addDataSourceProperty("idleTimeout", "60000"); // 空闲超时：60s
+        config.addDataSourceProperty("maximumPoolSize", "10"); // 最大连接数：10
+        DataSource sd = new HikariDataSource(config); // 创建DataSource也是一个非常昂贵的操作，通常DataSource实例总是作为一个全局变量存储，并贯穿整个应用程序的生命周期
+
+
     }
 
 
