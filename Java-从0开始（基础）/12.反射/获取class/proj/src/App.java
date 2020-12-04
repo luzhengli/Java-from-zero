@@ -12,7 +12,7 @@ public class App {
         System.out.println("Class name: " + cls.getName()); // 类的全称名
         System.out.println("Simple name: " + cls.getSimpleName()); // 类的简称名
         if (cls.getPackage() != null) {
-            System.out.println("Package name: " + cls.getPackage().getName()); // 类所在的包的包名
+            System.out.println(P"Package name: " + cls.getPackage().getName()); // 类所在的包的包名
         }
         System.out.println("is interface: " + cls.isInterface()); // 是否是接口
         System.out.println("is enum: " + cls.isEnum()); // 是否是枚举
