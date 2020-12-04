@@ -51,6 +51,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Note\Java-from-zero\Java-从0开始（基础）\23.XML与JSON\json\src\main\java" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Note\Java-from-zero\Java-从0开始（基础）\23.XML与JSON\json\src\main\resources" />
       <recent name="F:\Note\Java-from-zero\Java-从0开始（基础）\23.XML与JSON\json\src\main\java" />
@@ -95,7 +98,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605871522178</updated>
-      <workItem from="1605871523263" duration="653000" />
+      <workItem from="1605871523263" duration="1562000" />
     </task>
     <servers />
   </component>
@@ -114,22 +117,42 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1814" height="295" key="GridCell.Tab.0.bottom" timestamp="1605872176344">
+    <state x="811" y="230" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1605872451371">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="295" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605872176344" />
-    <state width="1814" height="295" key="GridCell.Tab.0.center" timestamp="1605872176344">
+    <state x="811" y="230" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/63.0.1857.1080@63.0.1857.1080" timestamp="1605872451371" />
+    <state width="1814" height="364" key="GridCell.Tab.0.bottom" timestamp="1605873355382">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="295" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605872176344" />
-    <state width="1814" height="295" key="GridCell.Tab.0.left" timestamp="1605872176344">
+    <state width="1814" height="364" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355382" />
+    <state width="1814" height="364" key="GridCell.Tab.0.center" timestamp="1605873355381">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="295" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605872176344" />
-    <state width="1814" height="295" key="GridCell.Tab.0.right" timestamp="1605872176344">
+    <state width="1814" height="364" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355381" />
+    <state width="1814" height="364" key="GridCell.Tab.0.left" timestamp="1605873355381">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="295" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605872176344" />
+    <state width="1814" height="364" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355381" />
+    <state width="1814" height="364" key="GridCell.Tab.0.right" timestamp="1605873355381">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state width="1814" height="364" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355381" />
+    <state width="1814" height="364" key="GridCell.Tab.1.bottom" timestamp="1605873355382">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state width="1814" height="364" key="GridCell.Tab.1.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355382" />
+    <state width="1814" height="364" key="GridCell.Tab.1.center" timestamp="1605873355382">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state width="1814" height="364" key="GridCell.Tab.1.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355382" />
+    <state width="1814" height="364" key="GridCell.Tab.1.left" timestamp="1605873355382">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state width="1814" height="364" key="GridCell.Tab.1.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355382" />
+    <state width="1814" height="364" key="GridCell.Tab.1.right" timestamp="1605873355382">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state width="1814" height="364" key="GridCell.Tab.1.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605873355382" />
     <state x="521" y="195" key="Maven.ArtifactSearchDialog" timestamp="1605871673651">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>

@@ -28,9 +28,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -62,7 +70,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -83,19 +91,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.App" />
@@ -111,7 +106,9 @@
       <option name="presentableId" value="Default" />
       <updated>1605859578546</updated>
       <workItem from="1605859579709" duration="5827000" />
-      <workItem from="1605871297880" duration="1014000" />
+      <workItem from="1605871297880" duration="6423000" />
+      <workItem from="1605878877535" duration="3909000" />
+      <workItem from="1605950358128" duration="1540000" />
     </task>
     <servers />
   </component>
@@ -131,30 +128,38 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="583" y="181" key="#Plugins" timestamp="1605878861939">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state x="583" y="181" key="#Plugins/63.0.1857.1080@63.0.1857.1080" timestamp="1605878861939" />
+    <state x="796" y="241" key="#com.intellij.ide.util.MemberChooser" timestamp="1605877746499">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state x="796" y="241" key="#com.intellij.ide.util.MemberChooser/63.0.1857.1080@63.0.1857.1080" timestamp="1605877746499" />
     <state x="811" y="230" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1605859906923">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="811" y="230" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/63.0.1857.1080@63.0.1857.1080" timestamp="1605859906923" />
-    <state x="771" y="295" key="FileChooserDialogImpl" timestamp="1605871510619">
+    <state x="771" y="295" key="FileChooserDialogImpl" timestamp="1605955161297">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state x="771" y="295" key="FileChooserDialogImpl/63.0.1857.1080@63.0.1857.1080" timestamp="1605871510619" />
-    <state width="1814" height="507" key="GridCell.Tab.0.bottom" timestamp="1605871453906">
+    <state x="771" y="295" key="FileChooserDialogImpl/63.0.1857.1080@63.0.1857.1080" timestamp="1605955161297" />
+    <state width="1814" height="507" key="GridCell.Tab.0.bottom" timestamp="1605876376809">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="507" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605871453906" />
-    <state width="1814" height="507" key="GridCell.Tab.0.center" timestamp="1605871453906">
+    <state width="1814" height="507" key="GridCell.Tab.0.bottom/63.0.1857.1080@63.0.1857.1080" timestamp="1605876376809" />
+    <state width="1814" height="507" key="GridCell.Tab.0.center" timestamp="1605876376809">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="507" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605871453906" />
-    <state width="1814" height="507" key="GridCell.Tab.0.left" timestamp="1605871453906">
+    <state width="1814" height="507" key="GridCell.Tab.0.center/63.0.1857.1080@63.0.1857.1080" timestamp="1605876376809" />
+    <state width="1814" height="507" key="GridCell.Tab.0.left" timestamp="1605876376809">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="507" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605871453906" />
-    <state width="1814" height="507" key="GridCell.Tab.0.right" timestamp="1605871453906">
+    <state width="1814" height="507" key="GridCell.Tab.0.left/63.0.1857.1080@63.0.1857.1080" timestamp="1605876376809" />
+    <state width="1814" height="507" key="GridCell.Tab.0.right" timestamp="1605876376809">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state width="1814" height="507" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605871453906" />
+    <state width="1814" height="507" key="GridCell.Tab.0.right/63.0.1857.1080@63.0.1857.1080" timestamp="1605876376809" />
     <state width="1814" height="364" key="GridCell.Tab.1.bottom" timestamp="1605871282510">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
@@ -175,22 +180,26 @@
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="526" y="361" key="Maven.ArtifactSearchDialog/63.0.1857.1080@63.0.1857.1080" timestamp="1605871152548" />
-    <state x="492" y="184" key="SettingsEditor" timestamp="1605859985808">
+    <state x="492" y="184" key="SettingsEditor" timestamp="1605939799610">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state x="492" y="184" key="SettingsEditor/63.0.1857.1080@63.0.1857.1080" timestamp="1605859985808" />
+    <state x="492" y="184" key="SettingsEditor/63.0.1857.1080@63.0.1857.1080" timestamp="1605939799610" />
     <state x="530" y="276" width="922" height="641" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1605871084080">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="530" y="276" width="922" height="641" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/63.0.1857.1080@63.0.1857.1080" timestamp="1605871084080" />
-    <state x="366" y="200" key="new project wizard" timestamp="1605871520113">
+    <state x="435" y="194" key="new project wizard" timestamp="1605955166091">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
-    <state x="366" y="200" key="new project wizard/63.0.1857.1080@63.0.1857.1080" timestamp="1605871520113" />
+    <state x="435" y="194" key="new project wizard/63.0.1857.1080@63.0.1857.1080" timestamp="1605955166091" />
     <state x="648" y="250" width="672" height="677" key="run.anything.popup" timestamp="1605859881482">
       <screen x="63" y="0" width="1857" height="1080" />
     </state>
     <state x="648" y="250" width="672" height="677" key="run.anything.popup/63.0.1857.1080@63.0.1857.1080" timestamp="1605859881482" />
+    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1605939305496">
+      <screen x="63" y="0" width="1857" height="1080" />
+    </state>
+    <state x="654" y="235" width="672" height="678" key="search.everywhere.popup/63.0.1857.1080@63.0.1857.1080" timestamp="1605939305496" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

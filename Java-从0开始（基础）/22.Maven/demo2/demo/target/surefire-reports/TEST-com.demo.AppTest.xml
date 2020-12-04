@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.demo.AppTest" time="0.059" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.demo.AppTest" time="0.037" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="GBK"/>
-    <property name="java.class.path" value="f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\test-classes;f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\classes;C:\Users\luyao\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\luyao\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.class.path" value="F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\test-classes;F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\classes;C:\Users\luyao\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\luyao\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CN"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-14.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\luyao\AppData\Local\Temp\surefire16539041471132893192\surefirebooter8314677665993898128.jar C:\Users\luyao\AppData\Local\Temp\surefire16539041471132893192 2020-11-19T19-14-07_549-jvmRun1 surefire7872436823349981267tmp surefire_017899326178442373754tmp"/>
+    <property name="sun.java.command" value="C:\Users\luyao\AppData\Local\Temp\surefire4837602613158689151\surefirebooter11612786646384567392.jar C:\Users\luyao\AppData\Local\Temp\surefire4837602613158689151 2020-11-20T13-50-44_422-jvmRun1 surefire9371163026928277997tmp surefire_09706361210436100383tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\test-classes;f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\classes;C:\Users\luyao\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\luyao\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="surefire.test.class.path" value="F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\test-classes;F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo\target\classes;C:\Users\luyao\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\luyao\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\luyao"/>
     <property name="user.language" value="zh"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2020-07-14"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-14.0.2"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo"/>
+    <property name="basedir" value="F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\luyao\AppData\Local\Temp\surefire16539041471132893192\surefirebooter8314677665993898128.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\luyao\AppData\Local\Temp\surefire4837602613158689151\surefirebooter11612786646384567392.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="14.0.2+12-46"/>
@@ -39,13 +39,12 @@
     <property name="os.version" value="10.0"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="file.encoding" value="GBK"/>
-    <property name="archetypeCatalog" value="internal"/>
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="localRepository" value="C:\Users\luyao\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\luyao\AppData\Local\Temp\"/>
     <property name="java.version" value="14.0.2"/>
-    <property name="user.dir" value="f:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo"/>
+    <property name="user.dir" value="F:\Note\Java-from-zero\Java-从0开始（基础）\22.Maven\demo2\demo"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
@@ -56,5 +55,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="58.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.demo.AppTest" time="0.002"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.demo.AppTest" time="0.004"/>
 </testsuite>

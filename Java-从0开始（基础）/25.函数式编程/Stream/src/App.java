@@ -48,7 +48,7 @@ public class App {
         sl.map(String::trim).map(String::toUpperCase).forEach(System.out::println);
     }
 
-}
+}  
 
 class NaturalSupplier implements Supplier<Integer> {
     int n = 0;
